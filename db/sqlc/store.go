@@ -99,11 +99,19 @@ func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (Trans
 			Amount: -arg.Amount,
 		})
 
+		if err != nil {
+			return err
+		}
+
 		println(*txName, "Update ToAccount")
 		result.ToAccount, err = queries.AddAccountBalance(ctx, AddAccountBalanceParams{
 			ID:     arg.ToAccountID,
 			Amount: arg.Amount,
 		})
+
+		if err != nil {
+			return err
+		}
 
 		return nil
 	})
